@@ -14,7 +14,7 @@ except:
     dataFormat = str(input("Please choose either artist, album, or track charts by typing your option as it is written: "))
 detailedCheck = str(input("Would you like to grab images and tags for the top 30 "+dataFormat+"s of each week? Please respond Y or N: ")).lower()
 detailedCheckBoolean = 'y' == detailedCheck
-apiKey = "617512ecede614f849a5d87a44e8387a"#str(input("Enter your last.fm api key: "))
+apiKey = "PUTYOURKEYHERE"#str(input("Enter your last.fm api key: "))
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 dataTable = pd.DataFrame()
 arrayOfDateRanges = []
