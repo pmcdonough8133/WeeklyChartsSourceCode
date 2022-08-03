@@ -6,7 +6,7 @@ try:
     f = open('settings.txt', "r")
     lastfmUsername = f.readline().rstrip("\n")
     startDateString = f.readline().rstrip("\n")
-    dataFormat = f.readline()
+    dataFormat = f.readline().rstrip("\n")
     print("Settings file found\nUsername set as "+lastfmUsername+"\nStart date set as: "+startDateString+"\nData Format is: "+dataFormat)
 except:
     lastfmUsername = str(input("Enter your username: "))
@@ -63,6 +63,12 @@ def main():
                             pictureAndTagsMaster[name] = {'url': pictureAndTags[0], 'First Tag': pictureAndTags[1][0], 'Tags': pictureAndTags[1]}
                         except IndexError:
                             pictureAndTagsMaster[name] = {'url': pictureAndTags[0], 'First Tag': '', 'Tags': ''}
+                        except TypeError:
+                            print(type(pictureAndTagsMaster))
+                            print(type(pictureAndTags))
+                            print(pictureAndTags)
+                            print("Pretty sure this is a last.fm error")
+                            sys.exit()
             weeklyDataDictionary[name] = [playcount]
             # try:
             #     if weeklyRank < 31:
@@ -154,8 +160,11 @@ def getAlbumOrTrackDetails(albumOrTrack, artist):
                 for image in response[dataFormat]['image']:
                     if image['size'] == "large":
                         urlImage = image['#text']
-                for tag in response[dataFormat]['tags']['tag']:
-                    tags.append(tag['name'].title())
+                try:
+                    for tag in response[dataFormat]['tags']['tag']:
+                        tags.append(tag['name'].title())
+                except:
+                    tags.append("N/A")
         except KeyError:
             logging.exception("Somehow, "+dataFormat+", "+albumOrTrack+", does not exist")
             urlImage = ''
